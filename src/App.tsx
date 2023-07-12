@@ -13,13 +13,15 @@ function App() {
   useEffect(() => {
     const fetchJoke = async () => {
       const response = await fetch(
-        "https://jokestemp.neillbogie.repl.co/jokes/general/random"
+        "https://jokestemp.neillbogie.repl.co/jokes/general/ranom"
       );
       const jsonBody: Joke[] = await response.json();
       setJoke(jsonBody[0]);
+      console.log(jsonBody[0])
     };
 
     fetchJoke();
+
   }, []);
 
   // useEffect(() => {
@@ -53,4 +55,33 @@ function App() {
   );
 }
 
-export default App;
+interface Quote {
+  id: string;
+  content: string;
+  author: string;
+}
+
+function App2 () {
+const [quote, setQuote] = useState<Quote>();
+
+useEffect (() => {
+  async function fetchQuote() {
+  const response = await fetch("https://api.quotable.io/random");
+const jsonContent : Quote = await response.json();
+setQuote(jsonContent)
+
+  };
+  fetchQuote();
+},[])
+
+return (
+  <div>
+    {(quote)&&( <>
+      <h1>Welcome!</h1>
+      <p>{quote.content}</p>
+      <p>{quote.author}</p>
+    </>)}
+  </div>
+)
+}
+export default App2;
